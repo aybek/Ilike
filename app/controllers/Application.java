@@ -7,6 +7,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import scala.concurrent.Future;
 import views.html.index;
+import views.html.common.profile;
 import workers.akka.messages.ResultMessage;
 import workers.akka.messages.StatusMessage;
 
@@ -53,6 +54,10 @@ public class Application extends Controller {
         }
     }
 
+    public static Result getProfile(Long userId){
+
+        return ok(profile.render());
+    }
 
 
 }

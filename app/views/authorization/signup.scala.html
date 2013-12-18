@@ -1,0 +1,81 @@
+@(signupForm: Form[AuthorisedUser])
+@import models.utils.SecurityRoleUtils
+
+@import helper._
+@import helper.twitterBootstrap._
+
+
+
+@main("Sign Up"){
+    @helper.form(action = routes.Authorization.submit, 'enctype -> "multipart/form-data") {
+<div class="container">
+<div class="row">
+    <div class=" col-md-5"></div>
+    <div class="container col-md-2" >
+            <fieldset>
+                <legend>Пожалуйста, зарегистрируйтесь</legend>
+                @inputText(
+                    signupForm("firstName"),
+                    '_label -> "Имя",
+                    '_help -> "Пожалуйста, выберите правильное имя.",
+                    '_error -> signupForm.globalError,
+                    'class -> "form-control"
+                )
+
+                @inputText(
+                    signupForm("lastName"),
+                    '_label -> "Фамилия",
+                    '_help -> "Выберите действительную фамилию.",
+                    '_error -> signupForm.globalError,
+                    'class -> "form-control"
+                )
+
+                @inputText(
+                signupForm("middleName"),
+                '_label -> "Отчество",
+                '_help -> "Пожалуйста, выберите правильное Отчество.",
+                '_error -> signupForm.globalError,
+                'class -> "form-control"
+                )
+
+                @inputText(
+                    signupForm("email"), '_label -> "Email",
+                    '_help -> "Enter a valid email address.",
+                    'class -> "form-control"
+                )
+
+                @inputPassword(
+                    signupForm("password"),
+                    '_label -> "Password",
+                    '_help -> "A password must be at least 6 characters. ",
+                    'class -> "form-control"
+                )
+
+                @inputPassword(
+                    signupForm("repeatPassword"),
+                    '_label -> "Repeat password",
+                    '_help -> "Please repeat your password again.",
+                    '_error -> signupForm.error("password"),
+                    'class -> "form-control"
+                )
+
+
+            </fieldset>
+
+            <fieldset>
+                @checkbox(
+                    signupForm("accept"),
+                    '_label -> None, '_text -> "You aggree the Terms and conditions",
+                    '_showConstraints -> false
+                )
+            </fieldset>
+
+            <div class="actions">
+                <input type="submit" class="btn btn-primary" value="Sign Up">
+                <a href="@routes.Application.index()" class="btn btn-primary">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
+    }   
+}
