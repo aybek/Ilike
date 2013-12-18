@@ -5,8 +5,8 @@ import play.libs.Akka;
 import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
+import scala.concurrent.Future;
 import views.html.index;
-import workers.akka.Master;
 import workers.akka.messages.ResultMessage;
 import workers.akka.messages.StatusMessage;
 
@@ -15,11 +15,11 @@ import static akka.pattern.Patterns.ask;
 public class Application extends Controller {
 
     public static Result index() {
-        ActorRef actor1 = Akka.system().actorOf(Master.mkProps(48760195),"OMTS1");
-        ActorRef actor2 = Akka.system().actorOf(Master.mkProps(48760195),"OMTS2");
-        for (int i=1;i<=100;i++){
-        uploadProgress("OMTS1");
-        }
+//        ActorRef actor1 = Akka.system().actorOf(Master.mkProps(48760195),"OMTS1");
+//        ActorRef actor2 = Akka.system().actorOf(Master.mkProps(48760195),"OMTS2");
+//        for (int i=1;i<=100;i++){
+//        uploadProgress("OMTS1");
+//        }
         return ok(index.render("Your new application is ready."));
     }
 
@@ -47,6 +47,8 @@ public class Application extends Controller {
             );
             System.out.println("UPLOADPROGRESS:");
             System.out.println(res.getWrappedResult().toString());
+            Future<Object> g = ask(actor, new StatusMessage("Ask status"), 3000);
+            System.out.println(g.value());
          return 1;
         }
     }
