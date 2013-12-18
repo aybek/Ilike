@@ -3,7 +3,16 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
+GET        /                       controllers.Application.index()
+GET        /profile/:userId        controllers.Application.getProfile(userId:Long)
+
+GET        /oauth/blank/           controllers.Authorization.blank()
+GET        /oauth/check/           controllers.Authorization.checkOut()
+GET        /oauth/logout/          controllers.Authorization.logOut()
+GET        /oauth/signin/          controllers.Authorization.signin()
+GET        /oauth/submit/          controllers.Authorization.submit()
+GET        /oauth/quick/           controllers.Authorization.quickSignin()
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET        /assets/*file           controllers.Assets.at(path="/public", file)
+

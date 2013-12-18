@@ -1,0 +1,62 @@
+@(signinForm: Form[AuthorisedUser],message: String)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Sign In"){
+@helper.form(action = routes.Authorization.checkOut) {
+  <div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="panel panel-default" >
+                <div class="panel-heading">
+                    <h3 class="panel-title">Пожалуйста, Войдите </h3>
+                </div>
+                <div class="panel-body">
+                    <form class="form-signin">
+                        @inputText(
+                        signinForm("email"),
+                        '_help -> "Введите действительный адрес электронной почты.",
+                        '_label -> "Email",
+                        'placeholder -> "Email address",
+                        'class -> "form-control"
+                        )
+
+                        @inputPassword(
+                        signinForm("password"),
+                        '_label -> "Пароль",
+                        'class -> "form-control"
+                        )
+                    </form>
+                    <div class="actions">
+                        <input type="submit" class="btn btn-md btn-primary btn-block" value="Войти">
+                        <a href="@routes.Application.index()" class="btn btn-md btn-primary btn-block">Отменить</a>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+}
+ @if(message=="invalidUser"){
+      <div class="row">
+          <div class=" col-md-4"></div>
+            <div class="alert alert-danger col-lg-4">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <h4>Ошибка!</h4>
+                Неверный пользователь
+            </div>
+       </div>
+		}	
+ @if(message=="notFilled"){
+      <div class="row">
+          <div class=" col-md-4"></div>
+	           <div class="alert alert-danger col-lg-4">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <h4>Пожалуйста!</h4>
+                   Заполните все поля
+            </div>
+      </div>
+		}
+}
