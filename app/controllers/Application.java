@@ -15,11 +15,11 @@ import static akka.pattern.Patterns.ask;
 public class Application extends Controller {
 
     public static Result index() {
-        ActorRef actor1 = Akka.system().actorOf(Master.mkProps(48760195),"OMTS1");
-        ActorRef actor2 = Akka.system().actorOf(Master.mkProps(48760195),"OMTS2");
-        for (int i=1;i<=100;i++){
-        uploadProgress("OMTS1");
-        }
+//        ActorRef actor1 = Akka.system().actorOf(Master.mkProps(48760195),"OMTS1");
+//        ActorRef actor2 = Akka.system().actorOf(Master.mkProps(48760195),"OMTS2");
+//        for (int i=1;i<=100;i++){
+//        uploadProgress("OMTS1");
+//        }
         return ok(index.render("Your new application is ready."));
     }
 
