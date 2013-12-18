@@ -5,8 +5,8 @@ import play.libs.Akka;
 import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
+import scala.concurrent.Future;
 import views.html.index;
-import workers.akka.Master;
 import workers.akka.messages.ResultMessage;
 import workers.akka.messages.StatusMessage;
 
@@ -47,6 +47,8 @@ public class Application extends Controller {
             );
             System.out.println("UPLOADPROGRESS:");
             System.out.println(res.getWrappedResult().toString());
+            Future<Object> g = ask(actor, new StatusMessage("Ask status"), 3000);
+            System.out.println(g.value());
          return 1;
         }
     }
