@@ -3,6 +3,7 @@ package models;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -11,7 +12,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name="walls")
 public class Wall extends Model {
-    public Long wallId;
+    @Id
+    public Long id;
+
+    public int wallId;
     public String name;
 
     public Wall(){

@@ -11,6 +11,7 @@ import workers.akka.messages.*;
 public class Master extends UntypedActor {
     private int likes = 0;
     private int clientId;
+    private String name;
 
     @Override
     public void preStart(){
@@ -19,13 +20,14 @@ public class Master extends UntypedActor {
         child.tell(new ConfigMessage("Start requests",this.clientId),getSelf());
     }
 
-    public static Props mkProps(int clientId) {
-        return Props.create(Master.class, clientId);
+    public static Props mkProps(int clientId,String name) {
+        return Props.create(Master.class, clientId, name);
     }
 
-    public Master(int clientId){
+    public Master(int clientId,String name){
         this.clientId = clientId;
-        System.out.println("Master constructor executed");
+        this.name = name;
+        System.out.println("Master constructor executed "+name);
     }
 
 
@@ -38,9 +40,9 @@ public class Master extends UntypedActor {
     @Override
     public void onReceive(Object message) throws Exception {
        if (message instanceof StatusUpdate) {
-            System.out.println("Got Status Update");
+            System.out.println("Got Status Update "+ this.name);
             likes = ((StatusUpdate) message).getLikes();
-
+            System.out.println(likes);
         } else
        if (message instanceof StatusMessage) {
             getSender().tell(new ResultMessage("" + likes), getSelf());

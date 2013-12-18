@@ -39,7 +39,7 @@ public class Child extends UntypedActor {
     @Override
     public void postStop() throws Exception {
         super.postStop();
-        System.out.println("Child Killed");
+        System.out.println("Child Killed "+name);
     }
 
     public static Props mkProps(String name) {
@@ -50,7 +50,7 @@ public class Child extends UntypedActor {
 
     public Child(String name){
       this.name = name;
-        System.out.println("Created Child Worker");
+        System.out.println("Created Child Worker "+name);
     }
 
 
@@ -63,6 +63,8 @@ public class Child extends UntypedActor {
             while (true){
                 sendGet();
                 getSender().tell(new StatusUpdate(likesCount), getSelf());
+
+                Thread.sleep(4000);
             }
 
 //            System.out.println("Child Done Work:");
@@ -77,7 +79,7 @@ public class Child extends UntypedActor {
         count=100;
         likesCount=0;
 
-        while(offset<postsNumber){
+//        while(offset<postsNumber){
 
             url = "http://api.vk.com/method/wall.get?owner_id=-"+clientId+"&offset="+offset+"&count="+count+"";
             offset+=count;
@@ -86,7 +88,7 @@ public class Child extends UntypedActor {
 
             con = (HttpURLConnection) obj.openConnection();
 
-            System.out.println(con.getResponseCode());
+//            System.out.println(con.getResponseCode());
 
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
@@ -109,9 +111,9 @@ public class Child extends UntypedActor {
 //            System.out.println("OFFSET "+offset+" , likes: "+likesCount);
 //            System.out.println(response.toString());
 
-        }
-        System.out.println();
-        System.out.println(getSender().path()+"TOTAL: "+likesCount);
+//        }
+//        System.out.println();
+//        System.out.println(getSender().path()+"TOTAL: "+likesCount);
         //print result
 //        System.out.println(response.toString());
     }
