@@ -1,21 +1,62 @@
 @()
 
 @main("profile") {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/normalize.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/style.css")">
+
 
     <div class="row">
-        <div class="col-md-6">
-            <div class="panel panel-success ">
-               <div class="panel-body">
-                    <img src="@routes.Assets.at("images/towel.jpg")">
-               </div>
-               <div class="panel-footer">
-               </div>
-            </div>
+        <div class="bg-gradient"></div>
+        <div class="container">
+
+            <h2></h2>
+            <div id="CDT"></div>
+
         </div>
-        <div class="col-md-6">
-            <div id="map" style="width: 600px; height: 400px"></div>
-        </div>
+
+
     </div>
 
+    <script>
+    function CountdownTimer(elm,tl,mes){
+    this.initialize.apply(this,arguments);
+    }
+    CountdownTimer.prototype={
+    initialize:function(elm,tl,mes) {
+    this.elem = document.getElementById(elm);
+    this.tl = tl;
+    this.mes = mes;
+    },countDown:function(){
+    var timer='';
+    var today=new Date();
+    var sec=Math.floor(((this.tl-today)%(24*60*60*1000))/1000)%60%60;
+    var me=this;
+
+    if( ( this.tl - today ) > 0 ){
+    timer += '<span class="number-wrapper"><div class="line"></div><div class="caption">DAYS</div><span class="number day">'+1234242342 +'</span></span>';
+
+
+
+    this.elem.innerHTML = timer;
+    tid = setTimeout( function(){me.countDown();},10 );
+    }else{
+    this.elem.innerHTML = this.mes;
+    return;
+    }
+    },addZero:function(num){ return ('0'+num).slice(-2); }
+    }
+    function CDT(){
+
+    // Set countdown limit
+    var tl = new Date('2020/01/01 00:00:00');
+
+    // You can add time's up message here
+    var timer = new CountdownTimer('CDT',tl,'<span class="number-wrapper"><div class="line"></div><span class="number end">Time is up!</span></span>');
+    timer.countDown();
+    }
+    window.onload=function(){
+    CDT();
+    }
+    </script>
 
 }
