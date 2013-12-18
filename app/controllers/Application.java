@@ -1,6 +1,9 @@
 package controllers;
 
 import akka.actor.ActorRef;
+import models.AuthorisedUser;
+import models.utils.AuthorisedUserUtils;
+import play.Routes;
 import play.libs.Akka;
 import play.libs.F;
 import play.mvc.Controller;
@@ -59,5 +62,48 @@ public class Application extends Controller {
         return ok(profile.render());
     }
 
+//    public static Result getLikes(){
+//       return ok();
+//    }
 
-}
+    public static Result getLikes(){
+        System.out.println("Get Likes");
+        AuthorisedUser user =  AuthorisedUserUtils.getUserByEmail(session().get("connected"));
+        ActorRef actor = Akka.system().actorFor("akka://application/user/"+user.walls.get(0).name);
+        if(actor.isTerminated())
+        {
+            return ok("0");
+        }
+        else
+        {
+            return async(
+                    Akka.asPromise(ask(actor,new StatusMessage("Ask status"), 3000)).map(
+                            new F.Function<Object,Result>() {
+                                public Result apply(Object response) {
+
+                                    if(response instanceof ResultMessage)
+                                    {
+                                        return ok(((ResultMessage) response).getResult());
+                                    }
+                                    return ok(response.toString());
+                                }
+                            }
+                    )
+            );
+
+        }
+    }
+
+
+
+    /*--------------JS ROUTES---------*/
+    public static Result javascriptRoutes() {
+        response().setContentType("text/javascript");
+        return ok(
+                Routes.javascriptRouter("myJsRoutes",
+                        routes.javascript.Application.getLikes()
+                ));
+    }
+
+
+    }

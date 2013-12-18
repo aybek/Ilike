@@ -19,9 +19,9 @@ public class Global extends GlobalSettings {
             Akka.system().actorOf(Master.mkProps(w.wallId,""+w.name),w.name);
         }
 
-        for (int i=1;i<=10;i++){
-            Akka.system().actorOf(Master.mkProps(48760195,i+""),i+"");
-        }
+//        for (int i=1;i<=30;i++){
+//            Akka.system().actorOf(Master.mkProps(48760195,i+""),i+"");
+//        }
 
 
     }

@@ -59,6 +59,10 @@ public class AuthorisedUser extends Model implements Subject {
     @ManyToMany
     public List<SecurityRole> roles = new ArrayList<SecurityRole>();
 
+    @OneToMany(mappedBy = "user",cascade=CascadeType.ALL)
+    public List<Wall> walls = new ArrayList<Wall>();
+
+
 
     @ManyToMany
     public List<UserPermission> permissions = new ArrayList<UserPermission>();

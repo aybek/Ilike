@@ -32,8 +32,11 @@ create table permissions (
 ;
 
 create table walls (
-  wall_id                   bigint,
-  name                      varchar(255))
+  id                        bigint not null,
+  user_id                   bigint,
+  wall_id                   integer,
+  name                      varchar(255),
+  constraint pk_walls primary key (id))
 ;
 
 
@@ -54,6 +57,10 @@ create sequence roles_seq;
 
 create sequence permissions_seq;
 
+create sequence walls_seq;
+
+alter table walls add constraint fk_walls_user_1 foreign key (user_id) references users (id);
+create index ix_walls_user_1 on walls (user_id);
 
 
 
@@ -84,4 +91,6 @@ drop sequence if exists users_seq;
 drop sequence if exists roles_seq;
 
 drop sequence if exists permissions_seq;
+
+drop sequence if exists walls_seq;
 

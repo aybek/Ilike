@@ -3,8 +3,11 @@
 # ~~~~
 
 # Home page
+GET         /javascriptRoutes      controllers.Application.javascriptRoutes
+
 GET        /                       controllers.Application.index()
 GET        /profile/:userId        controllers.Application.getProfile(userId:Long)
+GET        /likes/                 controllers.Application.getLikes()
 
 GET        /oauth/blank/           controllers.Authorization.blank()
 GET        /oauth/check/           controllers.Authorization.checkOut()
